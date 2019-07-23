@@ -3,8 +3,9 @@ const { transferConfirmReqSchema } = require('./utils/schemas');
 const sygnaCrypto = require('./utils/crypto');
 const sygnaBridgeUtil = require('sygna-bridge-util');
 
-const SygnaDomain = "https://3xw4q34cqd.execute-api.us-east-2.amazonaws.com/test/api";
-const API_KEY = 'THIS IS API KEY';
+const { SygnaBridgeDomain } = require('../config');
+const API_KEY = process.env.API_KEY;
+if(!API_KEY) throw new Error('Missing API_KEY');
 
 /**
  * Reponse 200 if signature is valid and priv_info can be decoded successfully.
@@ -17,7 +18,7 @@ async function transferConfirm (req_body) {
     
     const originator_data = sygnaCrypto.decodePrivateInfo(hex_data);
     
-    const originator_pubKey = await sygnaBridgeUtil.api.sygnaServer.getVASPPublicKey(SygnaDomain, API_KEY, originator_vasp_code);
+    const originator_pubKey = await sygnaBridgeUtil.api.sygnaServer.getVASPPublicKey(SygnaBridgeDomain, API_KEY, originator_vasp_code);
     const signObj = { hex_data , transaction};
     sygnaCrypto.verifySignature(signObj, originator_pubKey, originator_signature);
     
@@ -50,6 +51,7 @@ async function validateAndCallBack(req_body, originator_data) {
     const params = { transfer_id, beneficiary_signature, result };
     console.log(`\nCallBack to SygnaBridge: ${JSON.stringify(params)}`);
     const callbackResponse = await sygnaBridgeUtil.api.sygnaServer.callBackConfirmNotification(callback_url, API_KEY, params);
+
 }
 
 module.exports = {
