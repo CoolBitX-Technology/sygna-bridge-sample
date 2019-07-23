@@ -1,0 +1,58 @@
+{
+    "title": "API_INPUT",
+    "description": "describes properties required to check",
+    "type": "object",
+    "properties": {
+        "hex_data": {
+            "type": "string"
+        },
+        "transaction": {
+            "type": "object",
+            "properties": {
+                "originator_vasp_code":{
+                    "type": "string"
+                },
+                "originator_addr":{
+                    "type": "string"
+                },
+                "beneficiary_vasp_code":{
+                    "type": "string"
+                },
+                "beneficiary_addr":{
+                    "type": "string"
+                },
+                "transaction_currency":{
+                    "type": "string"
+                },
+                "amount":{
+                    "type": "number"
+                }
+            },
+            "required":[ "originator_vasp_code", "originator_addr", "beneficiary_vasp_code", "beneficiary_addr", "transaction_currency", "amount" ]
+        },
+        "originator_signature": {
+            "type": "string",
+            "maxLength":128,
+            "minLength":128
+        },
+        "transfer_id": {
+            "type": "string"
+        },
+        "initiation_time": {
+            "type": "number"
+        },
+        "callback_url": {
+            "type": "string"
+        }
+
+    },
+    "required": [
+        "hex_data",
+        "transaction",
+        "originator_signature",
+        "transfer_id",
+        "initiation_time",
+        "callback_url"
+    ],
+    "validateStrength": true
+}
