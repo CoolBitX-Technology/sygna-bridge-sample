@@ -23,26 +23,39 @@ You should implement following sections (marked with `@todo`) before starting th
 
 ### API Key validation
 
-`src/util/api_key_validation.js`.
+```shell
+path: src/util/api_key_validation.js
+```
 
-Implement your own API key validation logic to blockout unauthorized API calls.
+Implement your own API key validation logic to block out unauthorized API calls.
 
-### Originator Private Data Validation and storage
+### Originator Private Data Validation and Storage
 
-`src/transfer_confirmation.js`.
+```shell
+path: src/transfer_confirmation.js
+```
 
-Before sending your signature of approval or reject of an incoming transfer, 
+The originator VASP will provide you some private information of the transaction sender. According to FATL, **you must store the sender data locally to be AML compliant**. You may also need some extra validation on provided information according to local laws and regulations.
 
 ### Transaction validation
 
-`src/transfer_confirmation.js`.
+```shell
+path: src/transfer_confirmation.js
+```
 
-Make sure the 
+As mentioned before, you must make sure the receiving address is under your control or you have done a complete KYC with the account linked this address. You may also need to check if the `amount` of transaction is legal according to local laws before giving out your final signature.
 
 ## Run
 
+You need to set `SYGNA_PRIVKEY` and `API_KEY` as environment variables before starting the server, or specify them with start command.
 
+* `SYGNA_PRIVKEY` is the private key you generated and have its corresponding public key registered on Sygna Bridge Central server.
+
+* `API_KEY` is the key you get from Sygna Bridge Central server after successfully registration as a legal and compliant VASP.
 
 ```shell
+node app.js
+
+// with environment variable setting
 SYGNA_PRIVKEY=THIS_IS_A_32_BYTE_PRIVATEKEY API_KEY=APIKEY_GOT_FROM_SYGNA_BRIDGE_SERVER node app.js
 ```
