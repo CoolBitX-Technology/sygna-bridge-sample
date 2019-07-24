@@ -9,9 +9,9 @@ Sygna Bridge is a regulatory compliance solution of crypto asset transaction bet
 ### Roles in Sygna Bridge
 
 Under the design of Sygna Bridge Protocol, the originator VASP has to grant the signed approval from the beneficiary VASP before broadcasting any trnasaction to the blockchain.
-If any law enforcement agency later claims this transaction to be illegal, the originator can use the signature to prove that they have informed the receiver of the transaction and granted permission to send assets to the target address.
+In this case, if any law enforcement agency later claims this transaction to be illegal, the originator can use the signature to prove that they have informed the receiver of the transaction and granted permission to send assets to the target address.
 
-The mission of the beneficiary VASP is to make sure **the incoming fund is sending to a legal address under it's control**. This may include validation of addess owner's KYC data and the activity of the account. If it's not the case, this server should send back a `REJECT` message to Sygna Bridge Central Server as a record of rejection of receiving specific fund. This fund may still occur on the blockchain, but if there's any legal concern of this transaction, the beneficiary VASP can ask Sygna Bridge to provide prove of rejection and get rid of the legal responsibility.
+The mission of the beneficiary VASP is to make sure **the incoming fund is sending to a legal address under it's control**. This may include validation of addess owner's KYC data and the activity of the account. If it's not the case, this server should send back a signed `REJECT` message to Sygna Bridge Central Server as a record of rejection. This fund may still occur on the blockchain, but if there's any legal concern of this transaction, the beneficiary VASP can ask Sygna Bridge to provide prove of rejection and get rid of the legal responsibility.
 
 ## Installation
 
@@ -27,7 +27,7 @@ You should implement following sections (marked with `@todo`) before starting th
 path: src/util/api_key_validation.js
 ```
 
-Implement your own API key validation logic to block out unauthorized API calls.
+Implement your own API key validation logic to block out unauthorized API calls. Theoretically all the incoming api calls should come from Sygna Bridge central server.
 
 ### Originator Private Data Validation and Storage
 
