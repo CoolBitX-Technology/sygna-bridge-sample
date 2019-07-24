@@ -31,27 +31,22 @@ async function transferConfirm (req_body) {
  * @param {object} originator_data 
  */
 async function validateAndCallBack(req_body, originator_data) {
+    /**
+     * @todo Record originator private information in local db.
+     */
     console.log(`Validating Originator Data: ${JSON.stringify(originator_data)}`);
+    
     /**
-     * @todo
-     * Record originator private information in local db.
+     * @todo Implement amount check or address verification.
      */
-    const { transaction } = req_body;
-    console.log(`Validating Tx: ${JSON.stringify(transaction)}`);
-    /**
-     * @todo
-     * Implement amount check or address verification.
-     */
+    console.log(`Validating Tx: ${JSON.stringify(req_body.transaction)}`);
 
     const { transfer_id, callback_url } = req_body;
-    const result = "ACCEPT";
-    req_body.result = result;
-    console.log(`\nSigning request + result with my beneficiary priv_key: ${JSON.stringify(req_body)}`);
-    const beneficiary_signature = sygnaCrypto.signRequest(req_body);
-    const params = { transfer_id, beneficiary_signature, result };
-    console.log(`\nCallBack to SygnaBridge: ${JSON.stringify(params)}`);
-    const callbackResponse = await sygnaBridgeUtil.api.sygnaServer.callBackConfirmNotification(callback_url, API_KEY, params);
-
+    const result = "ACCEPT"; // or "REJECT"
+    let params = { transfer_id, result };
+    const beneficiary_signature = sygnaCrypto.signRequest(params);
+    params.beneficiary_signature = beneficiary_signature;
+    await sygnaBridgeUtil.api.beneficiary.callBackConfirmNotification(callback_url, API_KEY, params);
 }
 
 module.exports = {
