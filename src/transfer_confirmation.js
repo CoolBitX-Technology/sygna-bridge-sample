@@ -13,12 +13,12 @@ if(!API_KEY) throw new Error('Missing API_KEY');
  */
 async function transferConfirm (req_body) {
     validateSchema(req_body, transferConfirmReqSchema);
-    const { transaction, hex_data, originator_signature } = req_body;
+    const { hex_data, transaction, originator_signature } = req_body;
     const { originator_vasp_code } = transaction;
     
     const originator_data = sygnaCrypto.decodePrivateInfo(hex_data);
     
-    const originator_pubKey = await sygnaBridgeUtil.api.sygnaServer.getVASPPublicKey(SygnaBridgeDomain, API_KEY, originator_vasp_code);
+    const originator_pubKey = await sygnaBridgeUtil.api.getVASPPublicKey(SygnaBridgeDomain, API_KEY, originator_vasp_code);
     const signObj = { hex_data , transaction};
     sygnaCrypto.verifySignature(signObj, originator_pubKey, originator_signature);
     
@@ -44,9 +44,9 @@ async function validateAndCallBack(req_body, originator_data) {
     const { transfer_id, callback_url } = req_body;
     const result = "ACCEPT"; // or "REJECT"
     let params = { transfer_id, result };
-    const beneficiary_signature = sygnaCrypto.signRequest(params);
-    params.beneficiary_signature = beneficiary_signature;
-    await sygnaBridgeUtil.api.beneficiary.callBackConfirmNotification(callback_url, API_KEY, params);
+    const beneficiary_signature = sygnaCrypto.signRequest(params);    
+    const finalresult = await sygnaBridgeUtil.api.beneficiary.callBackConfirmNotification(callback_url, API_KEY, transfer_id, result, beneficiary_signature);
+    console.log(`Result from Sygna Bridge ${JSON.stringify(finalresult)}`);
 }
 
 module.exports = {
