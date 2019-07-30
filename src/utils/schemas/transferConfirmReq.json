@@ -38,8 +38,8 @@
         "transfer_id": {
             "type": "string"
         },
-        "initiation_time": {
-            "type": "number"
+        "data_dt": {
+            "type": "string"
         },
         "callback_url": {
             "type": "string"
@@ -51,7 +51,7 @@
         "transaction",
         "originator_signature",
         "transfer_id",
-        "initiation_time",
+        "data_dt",
         "callback_url"
     ],
     "validateStrength": true
