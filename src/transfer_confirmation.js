@@ -1,8 +1,10 @@
 const { validateSchema } = require('./utils/ajv_validate');
 const { transferConfirmReqSchema } = require('./utils/schemas');
-const sygnaCrypto = require('./utils/crypto');
 const sygnaBridgeUtil = require('sygna-bridge-util');
 const { SygnaBridgeDomain } = require('../config');
+
+const SYGNA_PRIVKEY = process.env.SYGNA_PRIVKEY;
+if(!SYGNA_PRIVKEY) throw new Error('Missing SYGNA_PRIVKEY');
 const username = process.env.SB_USER;
 const password = process.env.SB_PWD;
 if (!username || !password) throw new Error("Missing SB_USER or SB_PWD. Please set them as environment variables.");
@@ -14,16 +16,17 @@ const sygnaAPI = new sygnaBridgeUtil.api.API(username, password, SygnaBridgeDoma
  */
 async function transferConfirm (req_body) {
     validateSchema(req_body, transferConfirmReqSchema);
-    const { hex_data, transaction, data_dt, originator_signature } = req_body;
-    const { originator_vasp_code } = transaction;
+    const { data, callback } = req_body;
+    const { originator_vasp_code } = data.transaction;
     
-    const originator_data = sygnaCrypto.decodePrivateInfo(hex_data);
-    
+    const originator_data = sygnaBridgeUtil.crypto.sygnaDecodePrivateObg(hex_data, SYGNA_PRIVKEY);
     const originator_pubKey = await sygnaAPI.getVASPPublicKey(originator_vasp_code, false);
-    const signObj = { hex_data , transaction, data_dt};
-    sygnaCrypto.verifySignature(signObj, originator_pubKey, originator_signature);
-    
-    return originator_data;
+    const data_valid = sygnaBridgeUtil.crypto.verifyObject(data, originator_pubKey);
+    const callback_valid = sygnaBridgeUtil.crypto.verifyObject(callback);
+
+    if (data_valid && callback_valid) return originator_data;
+
+    throw new Error(`Signature verification fails`);
 }
 
 /**
@@ -40,14 +43,12 @@ async function validateAndCallBack(req_body, originator_data) {
     /**
      * @todo Implement amount check or address verification.
      */
-    console.log(`Validating Tx: ${JSON.stringify(req_body.transaction)}`);
+    console.log(`Validating Tx: ${JSON.stringify(req_body.data.transaction)}`);
 
-    const { transfer_id, callback_url } = req_body;
+    const { transfer_id, callback_url } = req_body.callback;
     const result = "ACCEPT"; // or "REJECT"
-    let params = { transfer_id, result };
-    const beneficiary_signature = sygnaCrypto.signRequest(params);    
-    const finalresult = await sygnaAPI.callBackConfirmNotification(transfer_id, result, beneficiary_signature);
-    // const finalresult = await sygnaBridgeUtil.api.beneficiary.callBackConfirmNotification(callback_url, API_KEY, transfer_id, result, beneficiary_signature);
+    const callbackObj = sygnaBridgeUtil.crypto.signResult(transfer_id, result, SYGNA_PRIVKEY);
+    const finalresult = await sygnaAPI.callBackConfirmNotification(callback_url, callbackObj);
     console.log(`Result from Sygna Bridge ${JSON.stringify(finalresult)}`);
 }
 

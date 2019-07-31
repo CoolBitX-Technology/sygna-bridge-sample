@@ -3,56 +3,71 @@
     "description": "describes properties required to check",
     "type": "object",
     "properties": {
-        "hex_data": {
-            "type": "string"
-        },
-        "transaction": {
-            "type": "object",
-            "properties": {
-                "originator_vasp_code":{
-                    "type": "string"
+        "data":{
+            "type":"object",
+            "properties":{
+                "private_info":{
+                    "type":"string"
                 },
-                "originator_addr":{
-                    "type": "string"
+                "transaction": {
+                    "type": "object",
+                    "properties": {
+                        "originator_vasp_code":{
+                            "type": "string"
+                        },
+                        "originator_addr":{
+                            "type": "string"
+                        },
+                        "beneficiary_vasp_code":{
+                            "type": "string"
+                        },
+                        "beneficiary_addr":{
+                            "type": "string"
+                        },
+                        "transaction_currency":{
+                            "type": "string"
+                        },
+                        "amount":{
+                            "type": "number"
+                        }
+                    },
+                    "required":[ "originator_vasp_code", "originator_addr", "beneficiary_vasp_code", "beneficiary_addr", "transaction_currency", "amount" ]
                 },
-                "beneficiary_vasp_code":{
-                    "type": "string"
+                "signature": {
+                    "type": "string",
+                    "maxLength":128,
+                    "minLength":128
                 },
-                "beneficiary_addr":{
+                "data_dt": {
                     "type": "string"
-                },
-                "transaction_currency":{
-                    "type": "string"
-                },
-                "amount":{
-                    "type": "number"
                 }
             },
-            "required":[ "originator_vasp_code", "originator_addr", "beneficiary_vasp_code", "beneficiary_addr", "transaction_currency", "amount" ]
+            "required": [
+                "private_info",
+                "transaction",
+                "signature",
+                "transfer_id",
+                "data_dt"
+            ]
         },
-        "originator_signature": {
-            "type": "string",
-            "maxLength":128,
-            "minLength":128
-        },
-        "transfer_id": {
-            "type": "string"
-        },
-        "data_dt": {
-            "type": "string"
-        },
-        "callback_url": {
-            "type": "string"
+        "callback":{
+            "type":"object",
+            "properties":{
+                "callback_url" : {
+                    "type": "string"
+                },
+                "transfer_id": {
+                    "type": "string"
+                },
+                "signature": {
+                    "type": "string",
+                    "maxLength":128,
+                    "minLength":128
+                }
+            },
+            "required": ["callback_url", "transfer_id", "signature"]
         }
-
     },
-    "required": [
-        "hex_data",
-        "transaction",
-        "originator_signature",
-        "transfer_id",
-        "data_dt",
-        "callback_url"
-    ],
+    "required": [ "data", "callback" ],
     "validateStrength": true
 }

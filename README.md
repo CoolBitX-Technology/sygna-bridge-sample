@@ -47,7 +47,7 @@ As mentioned before, you must make sure the receiving address is under your cont
 
 ## Run
 
-You need to set `SYGNA_PRIVKEY` and `API_KEY` as environment variables before starting the server, or specify them with start command.
+You need to set `SYGNA_PRIVKEY`, `SB_USER` and `SB_PWD` as environment variables before starting the server, or specify them with start command.
 
 * `SYGNA_PRIVKEY` is the private key you generated and have its corresponding public key registered on Sygna Bridge Central server.
 
@@ -57,5 +57,5 @@ You need to set `SYGNA_PRIVKEY` and `API_KEY` as environment variables before st
 node app.js
 
 // with environment variable setting
-SYGNA_PRIVKEY=THIS_IS_A_32_BYTE_PRIVATEKEY API_KEY=APIKEY_GOT_FROM_SYGNA_BRIDGE_SERVER node app.js
+SYGNA_PRIVKEY=THIS_IS_A_32_BYTE_PRIVATEKEY SB_USER=Coolbitx SB_PWD=password node app.js
 ```
