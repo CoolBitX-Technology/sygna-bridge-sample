@@ -45,7 +45,8 @@ async function validateAndCallBack(req_body, originator_data) {
      */
     console.log(`Validating Tx: ${JSON.stringify(req_body.data.transaction)}`);
 
-    const { transfer_id, callback_url } = req_body.callback;
+    const { transfer_id } = req_body;
+    const { callback_url } = req_body.callback;
     const result = "ACCEPT"; // or "REJECT"
     const callbackObj = sygnaBridgeUtil.crypto.signResult(transfer_id, result, SYGNA_PRIVKEY);
     const finalresult = await sygnaAPI.callBackConfirmNotification(callback_url, callbackObj);
