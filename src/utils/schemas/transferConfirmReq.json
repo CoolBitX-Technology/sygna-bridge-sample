@@ -56,18 +56,18 @@
                 "callback_url" : {
                     "type": "string"
                 },
-                "transfer_id": {
-                    "type": "string"
-                },
                 "signature": {
                     "type": "string",
                     "maxLength":128,
                     "minLength":128
                 }
             },
-            "required": ["callback_url", "transfer_id", "signature"]
+            "required": ["callback_url", "signature"]
+        },
+        "transfer_id": {
+            "type": "string"
         }
     },
-    "required": [ "data", "callback" ],
+    "required": [ "data", "callback", "transfer_id" ],
     "validateStrength": true
 }
