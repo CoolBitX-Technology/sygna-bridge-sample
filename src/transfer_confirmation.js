@@ -19,13 +19,12 @@ async function transferConfirm (req_body) {
     const { data, callback } = req_body;
     const { originator_vasp_code } = data.transaction;
     
-    const originator_data = sygnaBridgeUtil.crypto.sygnaDecodePrivateObg(hex_data, SYGNA_PRIVKEY);
-    const originator_pubKey = await sygnaAPI.getVASPPublicKey(originator_vasp_code, false);
+    const originator_data = sygnaBridgeUtil.crypto.sygnaDecodePrivateObg(data.private_info, SYGNA_PRIVKEY);
+    const originator_pubKey = await sygnaAPI.getVASPPublicKey(originator_vasp_code, true);
     const data_valid = sygnaBridgeUtil.crypto.verifyObject(data, originator_pubKey);
     const callback_valid = sygnaBridgeUtil.crypto.verifyObject(callback);
-
     if (data_valid && callback_valid) return originator_data;
-
+    // return originator_data;
     throw new Error(`Signature verification fails`);
 }
 

@@ -46,7 +46,6 @@
                 "private_info",
                 "transaction",
                 "signature",
-                "transfer_id",
                 "data_dt"
             ]
         },
