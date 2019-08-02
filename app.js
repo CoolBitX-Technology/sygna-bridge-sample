@@ -33,5 +33,5 @@ app.use(routerV1.routes());
 app.use(routerV1.allowedMethods());
 
 // tell the server to listen to events on a specific port
-const server = app.listen( process.env.SB_PORT? process.env.SB_PORT: 3000);
+const server = app.listen( process.env.SB_PORT || 3000);
 module.exports = server;
