@@ -1,4 +1,5 @@
 const txConfirm = require('../src/transfer_confirmation');
+const { callbackVerifyandLog } = require('../src/callback');
 
 module.exports = ({ routerV1 }) => {
     // Needed as a transaction receiver
