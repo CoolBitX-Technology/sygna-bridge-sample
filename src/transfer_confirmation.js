@@ -8,7 +8,7 @@ if(!SYGNA_PRIVKEY) throw new Error('Missing SYGNA_PRIVKEY');
 const username = process.env.SB_USER;
 const password = process.env.SB_PWD;
 if (!username || !password) throw new Error("Missing SB_USER or SB_PWD. Please set them as environment variables.");
-const sygnaAPI = new sygnaBridgeUtil.api.API(username, password, SygnaBridgeDomain);
+const sygnaAPI = new sygnaBridgeUtil.API(username, password, SygnaBridgeDomain);
 
 /**
  * Reponse 200 if signature is valid and priv_info can be decoded successfully.
