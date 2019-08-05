@@ -1,5 +1,5 @@
 const { validateSchema } = require('./utils/ajv_validate');
-const { transferConfirmReqSchema } = require('./utils/schemas');
+const { transferConfirmReqSchema, privInfoSchema } = require('./utils/schemas');
 const sygnaBridgeUtil = require('sygna-bridge-util');
 const { SygnaBridgeDomain } = require('../config');
 
@@ -20,11 +20,14 @@ async function transferConfirm (req_body) {
     if(!schemaValidation.valid) return schemaValidation;
 
     const { data, callback } = req_body;
-    const { originator_vasp_code } = data.transaction;
     
     const originator_data = sygnaBridgeUtil.crypto.sygnaDecodePrivateObg(data.private_info, SYGNA_PRIVKEY);
+    const privateInfoVal = validateSchema(originator_data, privInfoSchema);
+    if(!privateInfoVal.valid) return privateInfoVal;
+
     if(!originator_data) return { err_msg:"Cannot decode private_info.", valid:false };
 
+    const { originator_vasp_code } = data.transaction;
     const originator_pubKey = await sygnaAPI.getVASPPublicKey(originator_vasp_code, true);
     const data_valid = sygnaBridgeUtil.crypto.verifyObject(data, originator_pubKey);
     const callback_valid = sygnaBridgeUtil.crypto.verifyObject(callback);

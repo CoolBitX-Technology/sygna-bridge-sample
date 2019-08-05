@@ -1,0 +1,50 @@
+{
+    "title": "PRIVATE_INFO",
+    "description": "describes properties required to check",
+    "type": "object",
+    "properties": {
+        "originator":{
+            "type":"object",
+            "properties":{
+                "name":{
+                    "type":"string"
+                },
+                "physical_address":{
+                    "type":"string"
+                },
+                "national_identity_number":{
+                    "type":"string"
+                },
+                "date_of_birth":{
+                    "type":"string"
+                },
+                "unique_identity":{
+                    "type":"string"
+                }
+
+            },
+            "required": [
+                "name"
+            ],
+            "minProperties":2,
+            "anyOf":[
+                {"required":["physical_address"]},
+                {"required":["national_identity_number"]},
+                {"required":["date_of_birth"]},
+                {"required":["unique_identity"]}
+            ]
+
+        },
+        "beneficiary":{
+            "type":"object",
+            "properties":{
+                "name" : {
+                    "type": "string"
+                }
+            },
+            "required": ["name"]
+        }
+    },
+    "required": [ "originator", "beneficiary"],
+    "validateStrength": true
+}
