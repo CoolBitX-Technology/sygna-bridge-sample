@@ -5,8 +5,8 @@ module.exports = ({ routerV1 }) => {
     // Needed as a transaction receiver
     routerV1.post('/transfer-confirmation', async (ctx) => {
         const reqBody = ctx.request.body;
-        let {valid, err_message, originator_data} = await txConfirm.transferConfirm(reqBody);
-        ctx.body = err_message | "";
+        let {valid, err_msg, originator_data} = await txConfirm.transferConfirm(reqBody);
+        ctx.body = err_msg | "";
         
         // call back sygnaBridge when validation is done.
         txConfirm.validateAndCallBack(reqBody, valid, originator_data);
