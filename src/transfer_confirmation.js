@@ -13,6 +13,7 @@ const sygnaAPI = new sygnaBridgeUtil.API(username, password, SygnaBridgeDomain);
 /**
  * Reponse 200 if signature is valid and priv_info can be decoded successfully.
  * @param {obj} req_body 
+ * @return {valid:boolean, originator_pubKey?:string, err_msg?:string}
  */
 async function transferConfirm (req_body) {
     validateSchema(req_body, transferConfirmReqSchema);
@@ -20,22 +21,24 @@ async function transferConfirm (req_body) {
     const { originator_vasp_code } = data.transaction;
     
     const originator_data = sygnaBridgeUtil.crypto.sygnaDecodePrivateObg(data.private_info, SYGNA_PRIVKEY);
-    if(!originator_data) throw new Error("Cannot decode private_info.");
-    
+    if(!originator_data) return { err_msg:"Cannot decode private_info.", valid:false };
+
     const originator_pubKey = await sygnaAPI.getVASPPublicKey(originator_vasp_code, true);
     const data_valid = sygnaBridgeUtil.crypto.verifyObject(data, originator_pubKey);
     const callback_valid = sygnaBridgeUtil.crypto.verifyObject(callback);
-    if (data_valid && callback_valid) return originator_data;
+    if (data_valid && callback_valid) return { valid:true, originator_data};
     // return originator_data;
-    throw new Error(`Signature verification fails`);
+    return { valid:false, err_msg:"Signature verification failed."};
 }
 
 /**
  * Validate transaction content and callback Sygna Central Server with signature if valid.
  * @param {object} req_body 
- * @param {object} originator_data 
+ * @param {boolean} valid
+ * @param {object?} originator_data 
  */
-async function validateAndCallBack(req_body, originator_data) {
+async function validateAndCallBack(req_body, valid, originator_data={}) {
+    const result = valid? "ACCEPT":"REJECT";
     /**
      * @todo Record originator private information in local db.
      */
@@ -48,7 +51,6 @@ async function validateAndCallBack(req_body, originator_data) {
 
     const { transfer_id } = req_body;
     const { callback_url } = req_body.callback;
-    const result = "ACCEPT"; // or "REJECT"
     const callbackObj = sygnaBridgeUtil.crypto.signResult(transfer_id, result, SYGNA_PRIVKEY);
     const finalresult = await sygnaAPI.callBackConfirmNotification(callback_url, callbackObj);
     console.log(`Result from Sygna Bridge ${JSON.stringify(finalresult)}`);
