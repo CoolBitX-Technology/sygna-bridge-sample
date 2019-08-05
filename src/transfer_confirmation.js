@@ -16,7 +16,9 @@ const sygnaAPI = new sygnaBridgeUtil.API(username, password, SygnaBridgeDomain);
  * @return {valid:boolean, originator_pubKey?:string, err_msg?:string}
  */
 async function transferConfirm (req_body) {
-    validateSchema(req_body, transferConfirmReqSchema);
+    const schemaValidation = validateSchema(req_body, transferConfirmReqSchema);
+    if(!schemaValidation.valid) return schemaValidation;
+
     const { data, callback } = req_body;
     const { originator_vasp_code } = data.transaction;
     
