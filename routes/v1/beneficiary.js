@@ -1,7 +1,7 @@
 const { validateRequest, callbackPermission } = require('../../src/beneficiary');
 
 module.exports = ({ routerV1Beneficiary }) => {
-    routerV1Beneficiary.post('/permissionRequest', async (ctx) => {
+    routerV1Beneficiary.post('/permission-request', async (ctx) => {
         const reqBody = ctx.request.body;
         let { valid, err_msg, originator_data } = await validateRequest(reqBody);
         if (err_msg) console.error(err_msg);
