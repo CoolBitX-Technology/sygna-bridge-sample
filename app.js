@@ -21,16 +21,19 @@ app.use(async (ctx, next) => {
 });
 
 // instantiate our new Router
-const routerV1 = new Router({
-  prefix: '/api/v1'
-});
+const routerV1Beneficiary = new Router({ prefix: '/api/v1/beneficiary/transaction' });
+const routerV1Originator = new Router( {prefix: '/api/v1/originator/transaction'} );
 
 // require our external routes and pass in the router
-require('./routes/v1')({ routerV1 });
+require('./routes/v1/beneficiary')({ routerV1Beneficiary });
+require('./routes/v1/originator')({ routerV1Originator });
 
 // tells the router to use all the routes that are on the object
-app.use(routerV1.routes());
-app.use(routerV1.allowedMethods());
+app.use(routerV1Beneficiary.routes());
+app.use(routerV1Beneficiary.allowedMethods());
+
+app.use(routerV1Originator.routes());
+app.use(routerV1Originator.allowedMethods());
 
 // tell the server to listen to events on a specific port
 const server = app.listen( process.env.SB_PORT || 3000);

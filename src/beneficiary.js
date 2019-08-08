@@ -15,7 +15,7 @@ const sygnaAPI = new sygnaBridgeUtil.API(username, password, SygnaBridgeDomain);
  * @param {obj} req_body 
  * @return {valid:boolean, originator_pubKey?:string, err_msg?:string}
  */
-async function transferConfirm (req_body) {
+async function validateRequest (req_body) {
     const schemaValidation = validateSchema(req_body, transferConfirmReqSchema);
     if(!schemaValidation.valid) return schemaValidation;
 
@@ -33,7 +33,10 @@ async function transferConfirm (req_body) {
     const callback_valid = sygnaBridgeUtil.crypto.verifyObject(callback);
     if (data_valid && callback_valid) return { valid:true, originator_data};
     // return originator_data;
-    return { valid:false, err_msg:"Signature verification failed."};
+    return { 
+        valid: false, 
+        err_msg:"Signature verification failed."
+    };
 }
 
 /**
@@ -42,7 +45,7 @@ async function transferConfirm (req_body) {
  * @param {boolean} valid
  * @param {object?} originator_data 
  */
-async function validateAndCallBack(req_body, valid, originator_data={}) {
+async function callbackPermission(req_body, valid, originator_data={}) {
     const result = valid? "ACCEPT":"REJECT";
     /**
      * @todo Record originator private information in local db.
@@ -62,6 +65,6 @@ async function validateAndCallBack(req_body, valid, originator_data={}) {
 }
 
 module.exports = {
-    transferConfirm,
-    validateAndCallBack
+    validateRequest,
+    callbackPermission
 };

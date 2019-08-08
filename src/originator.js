@@ -9,7 +9,7 @@ const sygnaAPI = new sygnaBridgeUtil.API(username, password, SygnaBridgeDomain);
  * Reponse 200 if signature is valid.
  * @param {obj} req_body 
  */
-async function callbackVerifyandLog (req_body) {
+async function recordPermission (req_body) {
     const { transfer_id } = req_body;
     const txDetail = await sygnaAPI.getTransferStatus(transfer_id);
     const { beneficiary_vasp_code } = txDetail.transaction;
@@ -24,5 +24,5 @@ async function callbackVerifyandLog (req_body) {
 
 
 module.exports = {
-    callbackVerifyandLog,
+    recordPermission,
 };
