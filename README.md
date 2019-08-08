@@ -1,8 +1,8 @@
-# JavaScript Sample Sygna Bridge VASP Server
+# Nodejs Sample Sygna Bridge VASP Server
 
 This is a sample Sygna Bridge VASP Server implemented with Nodejs.
 
-## What is a Sygna Bridge
+## Sygna Bridge
 
 Sygna Bridge is a regulatory compliance solution of crypto asset transaction between VASPs. You can find a more complete introducion about Sygna Bridge at [Sygna Bridge API Doc](https://coolbitx.gitlab.io/sygna/bridge/api/#sygna-bridge).
 
