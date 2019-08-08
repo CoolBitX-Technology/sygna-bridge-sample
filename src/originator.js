@@ -17,8 +17,10 @@ async function recordPermission (req_body) {
     const valid = sygnaBridgeUtil.crypto.verifyObject(req_body, beneficiary_pubkey);    
     
     if(!valid) throw new Error("decrypt failed.");
+    /**
+     * @todo Implement custom notification and storage about the result.
+     */
     console.log(`Got final result: ${req_body.result}`);
-
     return { message:"" };
 }
 
