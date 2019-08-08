@@ -6,7 +6,7 @@ This is a sample Sygna Bridge VASP Server implemented with Nodejs.
 
 Sygna Bridge is a regulatory compliance solution of crypto asset transaction between VASPs. You can find a more complete introducion about Sygna Bridge at [Sygna Bridge API Doc](https://coolbitx.gitlab.io/sygna/bridge/api/#sygna-bridge).
 
-### Role of Beneficary VASP
+### Role of Beneficary Server
 
 Under the design of Sygna Bridge, the **originator VASP** has to grant the signed approval from the **beneficiary VASP** before broadcasting any trnasaction to the blockchain. In this case, if any law enforcement agency later claims this transaction to be illegal, the originator can use the signature to prove that they have informed the receiver of the transaction and granted permission to send assets to the target address.
 
@@ -18,7 +18,7 @@ This fund may still occur on the blockchain, but if there's any legal concern of
 
 The bold arrow in the diagram indicate the request which the beneficiary should handle in the complete flow.
 
-### Role of Originator VASP
+### Role of Originator Server
 
 This example server also open an endpoint as originator's sample server, it listens to incoming permission from beneficiary.
 
