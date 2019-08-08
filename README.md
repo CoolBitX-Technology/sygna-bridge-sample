@@ -4,18 +4,27 @@ This is a sample Sygna Bridge VASP Server implemented with Nodejs.
 
 ## What is a Sygna Bridge
 
-Sygna Bridge is a regulatory compliance solution of crypto asset transaction between VASPs.
+Sygna Bridge is a regulatory compliance solution of crypto asset transaction between VASPs. You can find a more complete introducion about Sygna Bridge at [Sygna Bridge API Doc](https://coolbitx.gitlab.io/sygna/bridge/api/#sygna-bridge).
 
 ### Role of Beneficary VASP
 
-Under the design of Sygna Bridge Protocol, the **originator VASP** has to grant the signed approval from the **beneficiary VASP** before broadcasting any trnasaction to the blockchain.
-In this case, if any law enforcement agency later claims this transaction to be illegal, the originator can use the signature to prove that they have informed the receiver of the transaction and granted permission to send assets to the target address.
+Under the design of Sygna Bridge, the **originator VASP** has to grant the signed approval from the **beneficiary VASP** before broadcasting any trnasaction to the blockchain. In this case, if any law enforcement agency later claims this transaction to be illegal, the originator can use the signature to prove that they have informed the receiver of the transaction and granted permission to send assets to the target address.
 
-The mission of the beneficiary VASP is to make sure **the incoming fund is sending to a legal address under it's control**. This may include validation of addess owner's KYC data and the activity of the account. If it's not the case, this server should send back a signed `REJECT` message to Sygna Bridge Central Server as a record of rejection. This fund may still occur on the blockchain, but if there's any legal concern of this transaction, the beneficiary VASP can ask Sygna Bridge to provide prove of rejection and get rid of the legal responsibility.
+The mission of the beneficiary VASP is to make sure **the incoming fund is sending to a legal address under it's control**. This may include validation of addess owner's KYC data and the activity of the account. If the validation fails, the server should send back a signed `REJECT` message to Sygna Bridge Central Server as a record of rejection.
+
+This fund may still occur on the blockchain, but if there's any legal concern of this transaction, the beneficiary VASP can ask Sygna Bridge to provide prove of rejection and get rid of the legal responsibility.
+
+![beneficiary_server](https://coolbitx.gitlab.io/sygna/bridge/api/images/bnf_req_.png)
+
+The bold arrow in the diagram indicate the request which the beneficiary should handle in the complete flow.
 
 ### Role of Originator VASP
 
-This example server also work as a originator's sample server, it listens to incoming permission.
+This example server also open an endpoint as originator's sample server, it listens to incoming permission from beneficiary.
+
+When you post a permission request to Sygna Bridge server, you need to provide the domain of this server combined with the endpoint (`v1/originator/transaction/permission`) in `callback_url` so the Bridge know where to notify when it got a permission from beneficiary.
+
+![beneficiary_server](https://coolbitx.gitlab.io/sygna/bridge/api/images/org_permit_.png)
 
 ## Installation
 
@@ -23,7 +32,7 @@ Clone the project and run `npm install` to install all dependencies.
 
 ## Custom Implementation
 
-You should implement following sections (marked with `@todo`) before starting the server:
+You should implement following sections (marked with `@todo`) before starting the server.
 
 ### Validation and Storage of Transfer Originator's Private Data
 
@@ -47,7 +56,7 @@ As mentioned before, you must make sure the receiving address is under your cont
 path: src/originator.js
 ```
 
-If you are the originator VASP, you may also need to add some logic to inform your wallet user when you have grant a permission from transaction beneficiary.
+If you are the originator VASP, you may also need to add some logic to inform your wallet user when you have grant a permission from transaction beneficiary, so the wallet can proceed and complete the compliant transaction.
 
 ## Run
 
