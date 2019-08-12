@@ -49,24 +49,10 @@
                 "data_dt"
             ]
         },
-        "callback":{
-            "type":"object",
-            "properties":{
-                "callback_url" : {
-                    "type": "string"
-                },
-                "signature": {
-                    "type": "string",
-                    "maxLength":128,
-                    "minLength":128
-                }
-            },
-            "required": ["callback_url", "signature"]
-        },
         "transfer_id": {
             "type": "string"
         }
     },
-    "required": [ "data", "callback", "transfer_id" ],
+    "required": [ "data", "transfer_id" ],
     "validateStrength": true
 }
