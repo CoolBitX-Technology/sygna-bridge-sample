@@ -57,9 +57,8 @@ async function callbackPermission(req_body, valid, originator_data={}) {
     console.log(`Validating Tx: ${JSON.stringify(req_body.data.transaction)}`);
 
     const { transfer_id } = req_body;
-    const { callback_url } = req_body.callback;
-    const callbackObj = sygnaBridgeUtil.crypto.signPermission(transfer_id, result, SYGNA_PRIVKEY);
-    const finalresult = await sygnaAPI.postPermission(callback_url, callbackObj);
+    const permissionObj = sygnaBridgeUtil.crypto.signPermission(transfer_id, result, SYGNA_PRIVKEY);
+    const finalresult = await sygnaAPI.postPermission(permissionObj);
     console.log(`Result from Sygna Bridge ${JSON.stringify(finalresult)}`);
 }
 
