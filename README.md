@@ -60,12 +60,11 @@ If you are the originator VASP, you may also need to add some logic to inform yo
 
 ## Run
 
-You need to set `SYGNA_PRIVKEY`, `SB_PORT`, `SB_USER` and `SB_PWD` as environment variables before starting the server, or specify them with start command.
+You need to set `SYGNA_PRIVKEY`, `SB_PORT` and `SYGNA_API_KEY` as environment variables before starting the server, or specify them with start command.
 
 * `SYGNA_PRIVKEY` is the private key you generated and have its corresponding public key registered on Sygna Bridge Central server.
-
+* `SYGNA_API_KEY` is the 64 chars api key got from Sygna Bridge
 * `SB_PORT` default to 3000
-* `SB_USER` and `SB_PWD`: the verified username and password to interact with Sygna Bridge central server.
 
 ```shell
 node app.js

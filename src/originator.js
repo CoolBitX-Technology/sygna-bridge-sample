@@ -1,9 +1,8 @@
 const sygnaBridgeUtil = require('sygna-bridge-util');
 const { SygnaBridgeDomain } = require('../config');
-const username = process.env.SB_USER;
-const password = process.env.SB_PWD;
-if (!username || !password) throw new Error("Missing SB_USER or SB_PWD. Please set them as environment variables.");
-const sygnaAPI = new sygnaBridgeUtil.API(username, password, SygnaBridgeDomain);
+const API_KEY = process.env.SYGNA_API_KEY;
+if (API_KEY) throw new Error("Missing API_KEY.");
+const sygnaAPI = new sygnaBridgeUtil.API(API_KEY, SygnaBridgeDomain);
 
 /**
  * Reponse 200 if signature is valid.
