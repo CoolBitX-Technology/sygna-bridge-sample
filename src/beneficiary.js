@@ -18,7 +18,7 @@ async function validateRequest (req_body) {
     const schemaValidation = validateSchema(req_body, transferConfirmReqSchema);
     if(!schemaValidation.valid) return schemaValidation;
 
-    const { data, callback } = req_body;
+    const { data } = req_body;
     
     const originator_data = sygnaBridgeUtil.crypto.sygnaDecodePrivateObg(data.private_info, SYGNA_PRIVKEY);
     const privateInfoVal = validateSchema(originator_data, privInfoSchema);
@@ -29,9 +29,9 @@ async function validateRequest (req_body) {
     const { originator_vasp_code } = data.transaction;
     const originator_pubKey = await sygnaAPI.getVASPPublicKey(originator_vasp_code, true);
     const data_valid = sygnaBridgeUtil.crypto.verifyObject(data, originator_pubKey);
-    const callback_valid = sygnaBridgeUtil.crypto.verifyObject(callback);
-    if (data_valid && callback_valid) return { valid:true, originator_data};
-    // return originator_data;
+    
+    if (data_valid) return { valid:true, originator_data};
+    
     return { 
         valid: false, 
         err_msg:"Signature verification failed."
