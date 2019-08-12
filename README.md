@@ -70,5 +70,15 @@ You need to set `SYGNA_PRIVKEY`, `SB_PORT` and `SYGNA_API_KEY` as environment va
 node app.js
 
 // with environment variable setting
-SYGNA_PRIVKEY=THIS_IS_A_32_BYTE_PRIVATEKEY SB_USER=Coolbitx SB_PWD=password node app.js
+SYGNA_PRIVKEY=aaa SYGNA_API_KEY=bbb node app.js
 ```
+
+## Testing
+
+If you want to test your beneficiary VASP server, you can run the test script in `scripts/sample_flow.js`.
+In the script, we send a permission request from a registered sample vasp (Exchange 1) to Sygna Bridge, you should replace the `beneficiary_vasp_code` with your own vasp_code so the Bridge Server can relay the message to your VASP server.
+
+```shell
+node scripts/sample_flow.js
+```
+

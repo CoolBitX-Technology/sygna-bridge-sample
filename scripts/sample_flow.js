@@ -33,7 +33,7 @@ const privateInfo = {
 const data_dt = "2019-07-30T07";
 
 // Request Beneficary VASP's public key (or you can store them locally)
-sbiNode.getVASPPublicKey(transaction.beneficiary_vasp_code).then(recipient_pubKey=>{
+sbiNode.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(recipient_pubKey=>{
     console.log(`Benficiary Pubkey:\t${recipient_pubKey}`);
     
     const private_info = sygnaBridgeUtil.crypto.sygnaEncodePrivateObj(privateInfo, recipient_pubKey);
