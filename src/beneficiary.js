@@ -4,11 +4,10 @@ const sygnaBridgeUtil = require('sygna-bridge-util');
 const { SygnaBridgeDomain } = require('../config');
 
 const SYGNA_PRIVKEY = process.env.SYGNA_PRIVKEY;
-if(!SYGNA_PRIVKEY) throw new Error('Missing SYGNA_PRIVKEY');
-const username = process.env.SB_USER;
-const password = process.env.SB_PWD;
-if (!username || !password) throw new Error("Missing SB_USER or SB_PWD. Please set them as environment variables.");
-const sygnaAPI = new sygnaBridgeUtil.API(username, password, SygnaBridgeDomain);
+const API_KEY = process.env.SYGNA_API_KEY;
+if (!SYGNA_PRIVKEY) throw new Error('Missing SYGNA_PRIVKEY');
+if (!API_KEY) throw new Error("Missing SYGNA_API_KEY.");
+const sygnaAPI = new sygnaBridgeUtil.API(API_KEY, SygnaBridgeDomain);
 
 /**
  * Reponse 200 if signature is valid and priv_info can be decoded successfully.
