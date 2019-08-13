@@ -1,5 +1,5 @@
 const sygnaBridgeUtil = require('sygna-bridge-util');
-const sygnaServerUrl = "https://apis.sygna.io/sb/"
+const sygnaServerUrl = "https://apis.sygna.io/staging/sb/"
 
 // Sample Exchange 1 Data your beneficiary VASP endpoint Testing
 const exchange1_apiKey = "b94c6668bbdf654c805374c13bc7b675f00abc50ec994dbce322d7fb0138c875"
