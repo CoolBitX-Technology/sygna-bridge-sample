@@ -19,7 +19,7 @@ async function recordPermission (req_body) {
     /**
      * @todo Implement custom notification and storage about the result.
      */
-    console.log(`Got final result: ${req_body.result}`);
+    console.log(`Got final result: ${req_body.permission_status}`);
     return { message:"" };
 }
 

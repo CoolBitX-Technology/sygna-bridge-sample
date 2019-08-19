@@ -45,7 +45,7 @@ async function validateRequest (req_body) {
  * @param {object?} originator_data 
  */
 async function callbackPermission(req_body, valid, originator_data={}) {
-    const result = valid? "ACCEPT":"REJECT";
+    const permission_status = valid? "ACCEPT":"REJECT";
     /**
      * @todo Record originator private information in local db.
      */
@@ -57,7 +57,7 @@ async function callbackPermission(req_body, valid, originator_data={}) {
     console.log(`Validating Tx: ${JSON.stringify(req_body.data.transaction)}`);
 
     const { transfer_id } = req_body;
-    const permissionObj = sygnaBridgeUtil.crypto.signPermission(transfer_id, result, SYGNA_PRIVKEY);
+    const permissionObj = sygnaBridgeUtil.crypto.signPermission(transfer_id, permission_status, SYGNA_PRIVKEY);
     const finalresult = await sygnaAPI.postPermission(permissionObj);
     console.log(`Result from Sygna Bridge ${JSON.stringify(finalresult)}`);
 }
