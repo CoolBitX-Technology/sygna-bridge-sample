@@ -20,7 +20,7 @@ async function validateRequest (req_body) {
 
     const { data } = req_body;
     
-    const originator_data = sygnaBridgeUtil.crypto.sygnaDecodePrivateObg(data.private_info, SYGNA_PRIVKEY);
+    const originator_data = sygnaBridgeUtil.crypto.sygnaDecodePrivateObj(data.private_info, SYGNA_PRIVKEY);
     const privateInfoVal = validateSchema(originator_data, privInfoSchema);
     if(!privateInfoVal.valid) return privateInfoVal;
 

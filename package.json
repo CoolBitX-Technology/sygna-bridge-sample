@@ -1,6 +1,6 @@
 {
   "name": "sygna-beneficiary",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Sample Sygna beneficiary server",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,6 @@
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
     "request": "^2.88.0",
-    "sygna-bridge-util": "^1.4.1"
+    "sygna-bridge-util": "^1.4.2"
   }
 }
