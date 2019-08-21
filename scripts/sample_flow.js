@@ -58,10 +58,12 @@ sbiNode.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(recipien
         // Submit Transaction ID
         sbiNode.postTransactionId(sendTxIdObj).then(res => {
             console.log(`Send TxId to Bridge, Response: ${JSON.stringify(res)}`)
-            sbiNode.getStatus(transfer_id).then(lookup => {
-                console.log(`Lookup this transfer_id`)
-                console.log(lookup)
-            })
+            setTimeout(()=> {
+                sbiNode.getStatus(transfer_id).then(lookup => {
+                    console.log(`Lookup this transfer_id`)
+                    console.log(lookup)
+                })
+            }, 3000);
         })
     }).catch(err=>{
         console.log(`Post PermissionRequest Error`)
