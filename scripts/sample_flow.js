@@ -5,7 +5,7 @@ const { SygnaBridgeDomain } = require('../config')
 const exchange1_apiKey = "b94c6668bbdf654c805374c13bc7b675f00abc50ec994dbce322d7fb0138c875"
 const exchange1_privateKey = "948798a4dd6864f18d5c40483aa05bb58ab211a1f9bc455c4065418ee001366a";
 const exchange1_callback = "http://ec2-3-19-59-48.us-east-2.compute.amazonaws.com:4000/api/v1/originator/transaction/permission";
-const exchange1_vasp_code = "10000";
+const exchange1_vasp_code = "VASPUSNY1";
 
 const sbiNode = new sygnaBridgeUtil.API(exchange1_apiKey, SygnaBridgeDomain);
 
@@ -14,7 +14,7 @@ const sbiNode = new sygnaBridgeUtil.API(exchange1_apiKey, SygnaBridgeDomain);
 const transaction = {
     "originator_vasp_code": exchange1_vasp_code,
     "originator_addr": "3KvJ1uHPShhEAWyqsBEzhfXyeh1TXKAd7D",
-    "beneficiary_vasp_code": "10001",  // replace here
+    "beneficiary_vasp_code": "VASPUSNY2",  // replace here
     "beneficiary_addr": "3F4ReDwiMLu8LrAiXwwD2DhH8U9xMrUzUf",
     "transaction_currency": "0x80000000",
     "amount": Math.random()*10
@@ -30,7 +30,7 @@ const privateInfo = {
     }
 }
 
-const data_dt = "2019-07-30T07";
+const data_dt = "2019-07-29T06:29:00.123Z";
 
 // Request Beneficary VASP's public key (or you can store them locally)
 sbiNode.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(recipient_pubKey=>{
@@ -49,6 +49,7 @@ sbiNode.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(recipien
          * Should be able to get request at your Beneficiary VASP server.
          * Code below does not interact with Beneficiary VASP server anymore.
          */
+        console.error(result)
         let transfer_id = result.transfer_id;
         console.log(`Got transfer_id: ${transfer_id}`);
 
