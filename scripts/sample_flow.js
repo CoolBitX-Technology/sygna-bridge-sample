@@ -17,7 +17,7 @@ const transaction = {
     "beneficiary_vasp_code": "VASPUSNY2",  // replace here
     "beneficiary_addr": "3F4ReDwiMLu8LrAiXwwD2DhH8U9xMrUzUf",
     "transaction_currency": "0x80000000",
-    "amount": Math.random()*10
+    "amount": parseInt(Math.random()*10)
 };
 
 const privateInfo = {
