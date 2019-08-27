@@ -45,7 +45,7 @@ async function validateRequest (req_body) {
  * @param {object?} originator_data 
  */
 async function callbackPermission(req_body, valid, originator_data={}) {
-    const permission_status = valid? "ACCEPT":"REJECT";
+    const permission_status = valid? "ACCEPTED":"REJECTED";
     /**
      * @todo Record originator private information in local db.
      */
