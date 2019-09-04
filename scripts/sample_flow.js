@@ -1,5 +1,5 @@
 const sygnaBridgeUtil = require('sygna-bridge-util');
-const { SygnaBridgeDomain } = require('../config')
+const { SygnaBridgeTestDomain } = require('../config')
 
 // Sample Exchange 1 Data your beneficiary VASP endpoint Testing
 const exchange1_apiKey = "b94c6668bbdf654c805374c13bc7b675f00abc50ec994dbce322d7fb0138c875"
@@ -7,7 +7,7 @@ const exchange1_privateKey = "948798a4dd6864f18d5c40483aa05bb58ab211a1f9bc455c40
 const exchange1_callback = "http://ec2-3-19-59-48.us-east-2.compute.amazonaws.com:4000/api/v1/originator/transaction/permission";
 const exchange1_vasp_code = "VASPUSNY1";
 
-const sbiNode = new sygnaBridgeUtil.API(exchange1_apiKey, SygnaBridgeDomain);
+const sbiNode = new sygnaBridgeUtil.API(exchange1_apiKey, SygnaBridgeTestDomain);
 
 // Replace `beneficiary_vasp_code` with your own VASP code for beneficiary server's testing. 
 // If you have successfully registered on Sygna Bridge, Sygna Bridge will relay the message to your server

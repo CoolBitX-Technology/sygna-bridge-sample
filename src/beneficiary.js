@@ -1,13 +1,13 @@
 const { validateSchema } = require('./utils/ajv_validate');
 const { transferConfirmReqSchema, privInfoSchema } = require('./utils/schemas');
 const sygnaBridgeUtil = require('sygna-bridge-util');
-const { SygnaBridgeDomain } = require('../config');
+const { SygnaBridgeTestDomain } = require('../config');
 
 const SYGNA_PRIVKEY = process.env.SYGNA_PRIVKEY;
 const API_KEY = process.env.SYGNA_API_KEY;
 if (!SYGNA_PRIVKEY) throw new Error('Missing SYGNA_PRIVKEY');
 if (!API_KEY) throw new Error("Missing SYGNA_API_KEY.");
-const sygnaAPI = new sygnaBridgeUtil.API(API_KEY, SygnaBridgeDomain);
+const sygnaAPI = new sygnaBridgeUtil.API(API_KEY, SygnaBridgeTestDomain);
 
 /**
  * Reponse 200 if signature is valid and priv_info can be decoded successfully.

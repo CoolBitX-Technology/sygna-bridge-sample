@@ -1,4 +1,5 @@
 module.exports ={
-    "SygnaBridgeDomain": "https://staging-api.sygna.io/sb/"
+    "SygnaBridgeTestDomain": "https://test-api.sygna.io/sb/",
+    "SygnaBridgeStagingDomain": "https://staging-api.sygna.io/sb/"
 };
     
