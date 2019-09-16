@@ -1,7 +1,7 @@
 {
-  "name": "sygna-beneficiary",
-  "version": "1.4.2",
-  "description": "Sample Sygna beneficiary server",
+  "name": "bridge-sample-server",
+  "version": "1.5",
+  "description": "Sample Bridge vasp server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,6 +18,6 @@
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
     "request": "^2.88.0",
-    "sygna-bridge-util": "^1.4.2"
+    "sygna-bridge-util": "^1.5.0"
   }
 }
