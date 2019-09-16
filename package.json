@@ -1,6 +1,6 @@
 {
   "name": "bridge-sample-server",
-  "version": "1.5",
+  "version": "1.5.0",
   "description": "Sample Bridge vasp server",
   "main": "index.js",
   "scripts": {

@@ -37,7 +37,7 @@
                             "type": "number"
                         }
                     },
-                    "required":[ "originator_vasp_code", "originator_addr", "beneficiary_vasp_code", "beneficiary_addr", "transaction_currency", "amount" ]
+                    "required":[ "originator_vasp_code", "originator_addrs", "beneficiary_vasp_code", "beneficiary_addrs", "transaction_currency", "amount" ]
                 },
                 "signature": {
                     "type": "string",
