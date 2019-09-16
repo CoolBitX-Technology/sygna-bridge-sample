@@ -13,16 +13,22 @@
                     "type": "object",
                     "properties": {
                         "originator_vasp_code":{
-                            "type": "string"
+                            "type": "array"
                         },
-                        "originator_addr":{
-                            "type": "string"
+                        "originator_addrs":{
+                            "type": "string",
+                            "items":{
+                                "type":"string"
+                            }
                         },
                         "beneficiary_vasp_code":{
                             "type": "string"
                         },
-                        "beneficiary_addr":{
-                            "type": "string"
+                        "beneficiary_addrs":{
+                            "type": "array",
+                            "items":{
+                                "type":"string"
+                            }
                         },
                         "transaction_currency":{
                             "type": "string"

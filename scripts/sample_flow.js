@@ -13,9 +13,9 @@ const sbiNode = new sygnaBridgeUtil.API(exchange1_apiKey, SygnaBridgeTestDomain)
 // If you have successfully registered on Sygna Bridge, Sygna Bridge will relay the message to your server
 const transaction = {
     "originator_vasp_code": exchange1_vasp_code,
-    "originator_addr": "3KvJ1uHPShhEAWyqsBEzhfXyeh1TXKAd7D",
+    "originator_addrs": ["3KvJ1uHPShhEAWyqsBEzhfXyeh1TXKAd7D"],
     "beneficiary_vasp_code": "VASPUSNY2",  // replace here
-    "beneficiary_addr": "3F4ReDwiMLu8LrAiXwwD2DhH8U9xMrUzUf",
+    "beneficiary_addrs": ["3F4ReDwiMLu8LrAiXwwD2DhH8U9xMrUzUf"],
     "transaction_currency": "0x80000000",
     "amount": parseInt(Math.random()*10)
 };
