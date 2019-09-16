@@ -13,10 +13,10 @@
                     "type": "object",
                     "properties": {
                         "originator_vasp_code":{
-                            "type": "array"
+                            "type": "string"
                         },
                         "originator_addrs":{
-                            "type": "string",
+                            "type": "array",
                             "items":{
                                 "type":"string"
                             }
