@@ -11,7 +11,7 @@ const sygnaAPI = new sygnaBridgeUtil.API(API_KEY, SygnaBridgeTestDomain);
 async function recordPermission (req_body) {
     const { transfer_id } = req_body;
     const txDetail = await sygnaAPI.getStatus(transfer_id);
-    const { beneficiary_vasp_code } = txDetail.transaction;
+    const { beneficiary_vasp_code } = txDetail.transferData.transaction;
     const beneficiary_pubkey = await sygnaAPI.getVASPPublicKey(beneficiary_vasp_code);
     const valid = sygnaBridgeUtil.crypto.verifyObject(req_body, beneficiary_pubkey);    
     
