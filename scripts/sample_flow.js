@@ -7,7 +7,7 @@ const exchange1_privateKey = "948798a4dd6864f18d5c40483aa05bb58ab211a1f9bc455c40
 const exchange1_callback = "http://ec2-3-19-59-48.us-east-2.compute.amazonaws.com:4000/api/v1/originator/transaction/permission";
 const exchange1_vasp_code = "VASPUSNY1";
 
-const sbiNode = new sygnaBridgeUtil.API(exchange1_apiKey, SygnaBridgeTestDomain);
+const exchange1Node = new sygnaBridgeUtil.API(exchange1_apiKey, SygnaBridgeTestDomain);
 
 // Replace `beneficiary_vasp_code` with your own VASP code for beneficiary server's testing. 
 // If you have successfully registered on Sygna Bridge, Sygna Bridge will relay the message to your server
@@ -33,7 +33,7 @@ const privateInfo = {
 const data_dt = "2019-07-29T06:29:00.123Z";
 
 // Request Beneficary VASP's public key (or you can store them locally)
-sbiNode.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(recipient_pubKey=>{
+exchange1Node.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(recipient_pubKey=>{
     console.log(`Benficiary Pubkey:\t${recipient_pubKey}`);
     
     const private_info = sygnaBridgeUtil.crypto.sygnaEncodePrivateObj(privateInfo, recipient_pubKey);
@@ -44,7 +44,7 @@ sbiNode.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(recipien
     const callbackObj = sygnaBridgeUtil.crypto.signCallBack(exchange1_callback, exchange1_privateKey);
 
     // Send Permission Request
-    sbiNode.postPermissionRequest(permissionRequestObj, callbackObj).then(result => {
+    exchange1Node.postPermissionRequest(permissionRequestObj, callbackObj).then(result => {
         /**
          * Should be able to get request at your Beneficiary VASP server.
          * Code below does not interact with Beneficiary VASP server anymore.
@@ -57,10 +57,10 @@ sbiNode.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(recipien
         let sendTxIdObj = sygnaBridgeUtil.crypto.signTxId(transfer_id, txid, exchange1_privateKey);
 
         // Submit Transaction ID
-        sbiNode.postTransactionId(sendTxIdObj).then(res => {
+        exchange1Node.postTransactionId(sendTxIdObj).then(res => {
             console.log(`Send TxId to Bridge, Response: ${JSON.stringify(res)}`)
             setTimeout(()=> {
-                sbiNode.getStatus(transfer_id).then(lookup => {
+                exchange1Node.getStatus(transfer_id).then(lookup => {
                     console.log(`Lookup this transfer_id`)
                     console.log(lookup)
                 })
