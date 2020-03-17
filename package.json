@@ -1,6 +1,6 @@
 {
-  "name": "bridge-sample-server",
-  "version": "1.5.2",
+  "name": "@sygna/bridge-sample-server",
+  "version": "0.0.1",
   "description": "Sample Bridge vasp server",
   "main": "index.js",
   "scripts": {
@@ -12,12 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sygna/bridge-util": "0.0.1-beta.10",
     "ajv": "^6.10.2",
     "koa": "^2.5.3",
     "koa-bodyparser": "^4.2.1",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
-    "request": "^2.88.0",
-    "sygna-bridge-util": "1.5.2"
+    "request": "^2.88.0"
   }
 }
