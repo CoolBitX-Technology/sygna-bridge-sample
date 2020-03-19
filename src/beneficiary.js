@@ -1,6 +1,6 @@
 const { validateSchema } = require('./utils/ajv_validate');
 const { transferConfirmReqSchema, privInfoSchema } = require('./utils/schemas');
-const sygnaBridgeUtil = require('sygna-bridge-util');
+const sygnaBridgeUtil = require('@sygna/bridge-util');
 const { SygnaBridgeTestDomain } = require('../config');
 
 const SYGNA_PRIVKEY = process.env.SYGNA_PRIVKEY;
@@ -56,8 +56,7 @@ async function callbackPermission(req_body, valid, originator_data={}) {
      */
     console.log(`Validating Tx: ${JSON.stringify(req_body.data.transaction)}`);
 
-    const { transfer_id } = req_body;
-    const permissionObj = sygnaBridgeUtil.crypto.signPermission(transfer_id, permission_status, SYGNA_PRIVKEY);
+    const permissionObj = sygnaBridgeUtil.crypto.signPermission({...req_body, permission_status}, SYGNA_PRIVKEY);
     const finalresult = await sygnaAPI.postPermission(permissionObj);
     console.log(`Result from Sygna Bridge ${JSON.stringify(finalresult)}`);
 }

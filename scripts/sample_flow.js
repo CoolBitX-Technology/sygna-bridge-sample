@@ -1,4 +1,4 @@
-const sygnaBridgeUtil = require('sygna-bridge-util');
+const sygnaBridgeUtil = require('@sygna/bridge-util');
 const { SygnaBridgeTestDomain } = require('../config')
 
 // Sample Exchange 1 Data your beneficiary VASP endpoint Testing
@@ -40,11 +40,11 @@ exchange1Node.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(re
     console.log(`Encoded Private Info:\t${private_info}`);
     
     // Construct Rermission Request Object and callback Object
-    const permissionRequestObj = sygnaBridgeUtil.crypto.signPermissionRequest(private_info, transaction, data_dt, exchange1_privateKey)
-    const callbackObj = sygnaBridgeUtil.crypto.signCallBack(exchange1_callback, exchange1_privateKey);
+    const permissionRequestObj = sygnaBridgeUtil.crypto.signPermissionRequest({ private_info, transaction, data_dt }, exchange1_privateKey)
+    const callbackObj = sygnaBridgeUtil.crypto.signCallBack({ callback_url: exchange1_callback }, exchange1_privateKey);
 
     // Send Permission Request
-    exchange1Node.postPermissionRequest(permissionRequestObj, callbackObj).then(result => {
+    exchange1Node.postPermissionRequest({ data:permissionRequestObj, callback:callbackObj }).then(result => {
         /**
          * Should be able to get request at your Beneficiary VASP server.
          * Code below does not interact with Beneficiary VASP server anymore.
@@ -54,7 +54,7 @@ exchange1Node.getVASPPublicKey(transaction.beneficiary_vasp_code, false).then(re
         console.log(`Got transfer_id: ${transfer_id}`);
 
         const txid = "1a0c9bef489a136f7e05671f7f7fada2b9d96ac9f44598e1bcaa4779ac564dcd";
-        let sendTxIdObj = sygnaBridgeUtil.crypto.signTxId(transfer_id, txid, exchange1_privateKey);
+        let sendTxIdObj = sygnaBridgeUtil.crypto.signTxId({ transfer_id, txid }, exchange1_privateKey);
 
         // Submit Transaction ID
         exchange1Node.postTransactionId(sendTxIdObj).then(res => {

@@ -46,6 +46,10 @@
                 },
                 "data_dt": {
                     "type": "string"
+                },
+                "expire_date": {
+                  "type": "number",
+                  "minimum": 0
                 }
             },
             "required": [

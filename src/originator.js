@@ -1,4 +1,4 @@
-const sygnaBridgeUtil = require('sygna-bridge-util');
+const sygnaBridgeUtil = require('@sygna/bridge-util');
 const { SygnaBridgeTestDomain } = require('../config');
 const API_KEY = process.env.SYGNA_API_KEY;
 if (!API_KEY) throw new Error("Missing API_KEY.");
